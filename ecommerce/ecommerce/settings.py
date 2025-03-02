@@ -69,7 +69,7 @@ CORS_ALLOWED_ORIGINS = [
 # Allow all methods (GET, POST, PUT, DELETE)
 CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "DELETE"]
 
-ALLOWED_HOSTS = ["https://briankimurgor.pythonanywhere.com/"]
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 
 ROOT_URLCONF = 'ecommerce.urls'
