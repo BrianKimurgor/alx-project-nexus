@@ -69,7 +69,7 @@ CORS_ALLOWED_ORIGINS = [
 # Allow all methods (GET, POST, PUT, DELETE)
 CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "DELETE"]
 
-ALLOWED_HOSTS = ["https://alx-project-nexus-89gl.onrender.com"]
+ALLOWED_HOSTS = ["alx-project-nexus-89gl.onrender.com"]
 
 
 ROOT_URLCONF = 'ecommerce.urls'
