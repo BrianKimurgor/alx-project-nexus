@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-%h126-4*m9_x954&s@bue(i@&*u1azyf@dk2%9aj6yaz)4+neg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+
 
 
 # Application definition
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'categories',
     "corsheaders",
     "products",
+    "cart",
     'rest_framework_simplejwt.token_blacklist',
     'drf_spectacular',
     'drf_spectacular_sidecar',
@@ -70,17 +71,31 @@ CORS_ALLOWED_ORIGINS = [
 # Allow all methods (GET, POST, PUT, DELETE)
 CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "DELETE"]
 
-ALLOWED_HOSTS = ["alx-project-nexus-89gl.onrender.com"]
+ALLOWED_HOSTS = [
+    "alx-project-nexus-89gl.onrender.com",
+    "127.0.0.1",
+    "localhost",
+]
+
 
 
 ROOT_URLCONF = 'ecommerce.urls'
 
+
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
         
     ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,  
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
 }
 
 SIMPLE_JWT = {
