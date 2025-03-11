@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .models import CustomUser
+from rest_framework.authtoken.models import Token
 from .serializers import (
     RegisterSerializer, LoginSerializer, UserProfileSerializer, ResetPasswordSerializer
 )
