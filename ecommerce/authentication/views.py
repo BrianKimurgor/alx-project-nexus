@@ -29,6 +29,7 @@ class RegisterView(generics.CreateAPIView):
 class LoginView(generics.GenericAPIView):
     """User login view"""
     serializer_class = UserSerializer
+    permission_classes = [permissions.AllowAny] 
 
     @extend_schema(
         summary="User Login",
