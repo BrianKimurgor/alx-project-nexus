@@ -1,110 +1,52 @@
-from rest_framework import generics, status, permissions
+from django.contrib.auth import login, logout
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import send_mail
+from django.shortcuts import get_object_or_404
+from rest_framework import generics, status
 from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.exceptions import TokenError
-from django.contrib.auth import get_user_model, authenticate
-from drf_spectacular.utils import extend_schema
-from .serializers import UserSerializer
-
-User = get_user_model()
-
+from rest_framework.permissions import IsAuthenticated
+from .models import CustomUser
+from .serializers import (
+    RegisterSerializer, LoginSerializer, UserProfileSerializer, ResetPasswordSerializer
+)
 
 class RegisterView(generics.CreateAPIView):
-    """User registration view"""
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [permissions.AllowAny] 
-
-    @extend_schema(
-        summary="Register a new user",
-        description="Creates a new user with email, username, and password.",
-        request=UserSerializer,
-        responses={201: UserSerializer}
-    )
-    def post(self, request, *args, **kwargs):
-        return super().post(request, *args, **kwargs)
-
+    serializer_class = RegisterSerializer
 
 class LoginView(generics.GenericAPIView):
-    """User login view"""
-    serializer_class = UserSerializer
-    permission_classes = [permissions.AllowAny] 
+    serializer_class = LoginSerializer
 
-    @extend_schema(
-        summary="User Login",
-        description="Authenticates a user and returns an access and refresh token.",
-        request=UserSerializer,
-        responses={200: {"type": "object", "properties": {
-            "refresh": {"type": "string"},
-            "access": {"type": "string"}
-        }}}
-    )
-    def post(self, request, *args, **kwargs):
-        username = request.data.get("username")
-        password = request.data.get("password")
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            refresh = RefreshToken.for_user(user)
-            return Response({
-                "refresh": str(refresh),
-                "access": str(refresh.access_token)
-            })
-        return Response({"error": "Invalid Credentials"}, status=status.HTTP_401_UNAUTHORIZED)
-
-
-class LogoutView(APIView):
-    """User logout view"""
-    permission_classes = [permissions.IsAuthenticated]
-
-    @extend_schema(
-        summary="User Logout",
-        description="Logs out a user by blacklisting the refresh token.",
-        request={"type": "object", "properties": {"refresh_token": {"type": "string"}}},
-        responses={200: {"type": "object", "properties": {"message": {"type": "string"}}}}
-    )
     def post(self, request):
-        refresh_token = request.data.get("refresh_token")
-        if not refresh_token:
-            return Response({"error": "Refresh token is required"}, status=status.HTTP_400_BAD_REQUEST)
-        try:
-            token = RefreshToken(refresh_token)
-            token.blacklist()
-            return Response({"message": "Successfully logged out"}, status=status.HTTP_200_OK)
-        except TokenError:
-            return Response({"error": "Invalid refresh token"}, status=status.HTTP_400_BAD_REQUEST)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        login(request, serializer.validated_data)
+        return Response({"message": "Login successful"}, status=status.HTTP_200_OK)
 
+class LogoutView(generics.GenericAPIView):
+    def post(self, request):
+        logout(request)
+        return Response({"message": "Logged out successfully"}, status=status.HTTP_200_OK)
 
-class UserProfileView(generics.RetrieveUpdateAPIView):
-    """Retrieve and update user profile"""
-    permission_classes = [permissions.IsAuthenticated]
-    serializer_class = UserSerializer
+class ProfileView(generics.RetrieveUpdateAPIView):
+    serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_object(self):
-        """Retrieve the logged-in user's profile."""
         return self.request.user
 
-    @extend_schema(
-        summary="Get User Profile",
-        description="Retrieve details of the currently logged-in user.",
-        responses={200: UserSerializer}
-    )
-    def get(self, request, *args, **kwargs):
-        """Return user profile details."""
-        serializer = self.serializer_class(request.user)
-        return Response(serializer.data)
+class ResetPasswordView(generics.GenericAPIView):
+    serializer_class = ResetPasswordSerializer
 
-    @extend_schema(
-        summary="Update User Profile",
-        description="Update user details such as username, first name, and last name.",
-        request=UserSerializer,
-        responses={200: UserSerializer}
-    )
-    def put(self, request, *args, **kwargs):
-        """Update user profile details."""
-        serializer = self.serializer_class(request.user, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = get_object_or_404(CustomUser, email=serializer.validated_data['email'])
+        token = default_token_generator.make_token(user)
+        reset_link = f"http://yourdomain.com/reset-password/{user.pk}/{token}/"
+        send_mail(
+            subject="Password Reset",
+            message=f"Reset your password using the following link: {reset_link}",
+            from_email="noreply@yourdomain.com",
+            recipient_list=[user.email]
+        )
+        return Response({"message": "Password reset link sent"}, status=status.HTTP_200_OK)
