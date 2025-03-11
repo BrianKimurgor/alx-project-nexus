@@ -27,7 +27,17 @@ SECRET_KEY = 'django-insecure-%h126-4*m9_x954&s@bue(i@&*u1azyf@dk2%9aj6yaz)4+neg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# AUTH_USER_MODEL = 'authentication.User'
+
 AUTH_USER_MODEL = 'authentication.CustomUser'
+
+# Email Settings for Reset Password
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'kimurgorbrian20@gmail.com'
+EMAIL_HOST_PASSWORD = 'your_email_password'
 
 
 
