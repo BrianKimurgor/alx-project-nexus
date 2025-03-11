@@ -27,6 +27,8 @@ SECRET_KEY = 'django-insecure-%h126-4*m9_x954&s@bue(i@&*u1azyf@dk2%9aj6yaz)4+neg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+AUTH_USER_MODEL = 'authentication.CustomUser'
+
 
 
 
@@ -47,6 +49,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "products",
     "cart",
+    "orders",
     'rest_framework_simplejwt.token_blacklist',
     'drf_spectacular',
     'drf_spectacular_sidecar',
