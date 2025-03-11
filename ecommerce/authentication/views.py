@@ -14,6 +14,7 @@ class RegisterView(generics.CreateAPIView):
     """User registration view"""
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [permissions.AllowAny] 
 
     @extend_schema(
         summary="Register a new user",
