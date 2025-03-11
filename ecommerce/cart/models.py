@@ -1,9 +1,13 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings  # Import settings for dynamic user model reference
 from products.models import Product
 
 class CartItem(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cart_items')
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,  # Dynamically reference the custom user model
+        on_delete=models.CASCADE,
+        related_name='cart_items'
+    )
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
