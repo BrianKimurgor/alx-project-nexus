@@ -23,10 +23,8 @@ urlpatterns = [
     path('api/auth/', include('authentication.urls')),
     path("api/categories/", include("categories.urls")),
     path("api/products/", include("products.urls")),
-        # Generate the schema file
+    path('api/cart/', include('cart.urls')),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    # Swagger UI
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-    # Redoc UI (alternative API docs)
     path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]

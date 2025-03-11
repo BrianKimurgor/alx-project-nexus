@@ -37,9 +37,10 @@ class LoginView(generics.GenericAPIView):
         }}}
     )
     def post(self, request, *args, **kwargs):
-        email = request.data.get("email")
+        username = request.data.get("username")
         password = request.data.get("password")
-        user = User.objects.filter(email=email).first()
+        user = User.objects.filter(username=username).first()
+
 
         if user and user.check_password(password):
             refresh = RefreshToken.for_user(user)
