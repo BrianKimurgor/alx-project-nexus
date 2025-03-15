@@ -89,8 +89,8 @@ CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "DELETE"]
 
 ALLOWED_HOSTS = [
     "alx-project-nexus-89gl.onrender.com",
-    # "127.0.0.1",
-    # "localhost",
+    "127.0.0.1",
+    "localhost",
 ]
 
 
