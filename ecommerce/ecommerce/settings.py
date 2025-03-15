@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "products",
     "cart",
     "orders",
+    "payments",
     'rest_framework_simplejwt.token_blacklist',
     'drf_spectacular',
     'drf_spectacular_sidecar',
