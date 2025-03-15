@@ -18,24 +18,17 @@ class RegisterView(generics.CreateAPIView):
 
 class LoginView(generics.GenericAPIView):
     serializer_class = LoginSerializer
-    permission_classes = [AllowAny] 
+    permission_classes = [AllowAny]
 
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        # Authenticate the user
-        user = authenticate(
-            username=serializer.validated_data.get('username'),
-            password=serializer.validated_data.get('password')
-        )
+        user = serializer.user  # Retrieve the authenticated user
+        login(request, user)  # Log the user in
+        token, created = Token.objects.get_or_create(user=user)  # Generate or retrieve token
 
-        if user is not None:
-            login(request, user)  # Log the user in
-            token, created = Token.objects.get_or_create(user=user)  # Create token if it doesn't exist
-            return Response({"token": token.key, "message": "Login successful"}, status=status.HTTP_200_OK)
-        
-        return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({"token": token.key, "message": "Login successful"}, status=status.HTTP_200_OK)
 
 class LogoutView(generics.GenericAPIView):
     def post(self, request):

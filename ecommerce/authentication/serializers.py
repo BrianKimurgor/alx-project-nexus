@@ -28,8 +28,10 @@ class LoginSerializer(serializers.Serializer):
     def validate(self, data):
         user = authenticate(**data)
         if user and user.is_active:
-            return user
+            self.user = user  # Set the authenticated user as an instance attribute
+            return data
         raise serializers.ValidationError("Invalid credentials")
+
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
