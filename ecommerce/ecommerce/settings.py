@@ -89,8 +89,8 @@ CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "DELETE"]
 
 ALLOWED_HOSTS = [
     "alx-project-nexus-89gl.onrender.com",
-    # "127.0.0.1",
-    # "localhost",
+    "127.0.0.1",
+    "localhost",
 ]
 
 
@@ -109,6 +109,13 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ],
+
 }
 
 
