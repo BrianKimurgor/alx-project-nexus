@@ -80,8 +80,8 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # React/Next.js frontend
-    "https://yourfrontend.com",  # If deployed
+    # "http://localhost:3000",  # React/Next.js frontend
+    # "https://yourfrontend.com",  # If deployed
 ]
 
 # Allow all methods (GET, POST, PUT, DELETE)
@@ -89,8 +89,8 @@ CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "DELETE"]
 
 ALLOWED_HOSTS = [
     "alx-project-nexus-89gl.onrender.com",
-    "127.0.0.1",
-    "localhost",
+    # "127.0.0.1",
+    # "localhost",
 ]
 
 
