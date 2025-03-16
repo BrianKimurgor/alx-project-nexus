@@ -1,76 +1,195 @@
-# ProDev Backend Engineering Documentation
 
-## Project Overview
-This project is a GitHub repository dedicated to documenting major learnings from the ProDev Backend Engineering program. This repository serves as a knowledge hub, showcasing understanding of backend engineering concepts, tools, and best practices acquired throughout the program.
+# **Project Nexus**
 
-## Project Objective
-The objective of this project is to:
-- Consolidate key learnings from the ProDev Backend Engineering program.
-- Document major backend technologies, concepts, challenges, and solutions.
-- Serve as a reference guide for both current and future learners.
-- Foster collaboration between frontend and backend learners.
+**Project Nexus** is a comprehensive backend e-commerce system built with **Python**, **Django**, and **Django REST Framework (DRF)**. It provides RESTful APIs for product management, user authentication, ordering, and payment processing. The project is backend-only, with no frontend implementation, and is documented using **Swagger** and **ReDoc**.
 
-## Key Features
-- **Comprehensive Documentation:** Covers backend engineering concepts such as RESTful APIs, GraphQL APIs, Message Queues, CI/CD Pipelines, Celery & RabbitMQ, and System Design.
-- **Challenges & Solutions:** Includes real-world challenges faced and implemented solutions.
-- **Best Practices & Takeaways:** Highlights industry best practices and personal insights.
-- **Collaboration Hub:** Encourages teamwork between frontend and backend learners.
+---
 
-## Collaboration - Key for Success
-### Collaborate with Whom?
-- **Fellow ProDev Frontend Learners:** Exchange ideas, develop synergies, organize study/coding sessions. Maximize your potential and that of your colleagues!
-- **ProDev Backend Learners:** Collaboration with backend learners is essential, as you will use their endpoints to complete your project.
+## **Features**
+- **Product Management**: Create, retrieve, update, and delete products.
+- **User Authentication**: Register, login, logout, and profile management using **JWT (JSON Web Tokens)**.
+- **Order Management**: Place, retrieve, and cancel orders.
+- **Payment Integration**: Initiate payments and check payment status.
+- **Reviews and Ratings**: Add, update, and delete product reviews.
+- **Wishlist**: Add and remove products from the user's wishlist.
+- **Documentation**: APIs are documented using **Swagger** and **ReDoc**.
 
-### Where to Collaborate?
-- **Dedicated Discord Channel:** `#ProDevProjectNexus`
-  - Connect with both Frontend and Backend learners.
-  - Use the channel to exchange ideas, ask/answer questions, and stay updated with announcements from the staff.
+---
 
-💡 **ProDev Tip!**
-- Use the first week to communicate your chosen project.
-- Identify ProDev Frontend learners working on the same project to collaborate effectively.
+## **Technologies Used**
+- **Backend**: Python, Django, Django REST Framework (DRF)
+- **Authentication**: JWT (JSON Web Tokens)
+- **Database**: SQLite (for development), PostgreSQL (optional for production)
+- **Documentation**: Swagger and ReDoc
+- **Version Control**: Git
+- **Testing**: Django Test Framework
+- **Deployment**: Render (https://alx-project-nexus-89gl.onrender.com/)
 
-## Tasks
-### 0. Project Nexus Documentation *(Mandatory)*
-#### Project Objective
-Learners will create a GitHub repository named `alx-project-nexus` that serves as a documentation hub for their major learnings from the ProDev Backend Engineering program. This repository will showcase their understanding of backend engineering concepts, tools, and best practices.
+---
 
-### Instructions
-#### Create a GitHub Repository
-- Name the repository **alx-project-nexus**.
+## **Getting Started**
 
-#### Add a README.md File
-- Provide an overview of the ProDev Backend Engineering program.
-- Outline major learnings, including:
-  - **Key technologies covered:**
-    - Python, Django, REST APIs, GraphQL, Docker, CI/CD
-  - **Important backend development concepts:**
-    - Database Design, Asynchronous Programming, Caching Strategies
-  - **Challenges faced and solutions implemented**
-  - **Best practices and personal takeaways**
+### **Prerequisites**
+- Python 3.12 or higher
+- Git
+- Virtual environment (optional but recommended)
 
-#### Commit and Push the Changes
-- Ensure proper formatting and clarity in the `README.md` file.
-- Use Markdown syntax for:
-  - Headings (`#`, `##`, `###`)
-  - Lists (`-`, `*`, `1.`)
-- Push the repository to GitHub.
+---
 
-## Collaboration - Key to Success
-### Collaborate…with whom?
-- **Fellow ProDev Backend Learners:** Exchange ideas, develop synergies, and organize study/coding sessions.
-- **ProDev Frontend Learners:** Collaborate with them since they will use your backend API endpoints to complete their project.
+### **Cloning the Repository**
+1. Open your terminal and run:
+   ```bash
+   https://github.com/BrianKimurgor/alx-project-nexus
+   cd alx-project-nexus
+   ```
 
-### 🗣 Where will you collaborate?
-💬 **Dedicated Discord Channel:** `#ProDevProjectNexus`
-- Connect with both Frontend and Backend learners.
-- Share ideas, ask/answer questions, and stay updated with announcements.
+---
 
-💡 **ProDev Tip!**
-📢 Use the first week to:
-- Communicate which project you are developing.
-- Identify ProDev Frontend learners working on the same project to ensure seamless collaboration.
+### **Setting Up the Virtual Environment**
+1. Create a virtual environment:
+   ```bash
+   python -m venv venv
+   ```
+2. Activate the virtual environment:
+   - On macOS/Linux:
+     ```bash
+     source venv/bin/activate
+     ```
+   - On Windows:
+     ```bash
+     venv\Scripts\activate
+     ```
 
-## Repo:
-- **GitHub repository:** `alx-project-nexus`
-- **File:** `README.md`
+---
+
+### **Installing Dependencies**
+1. Install the required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+---
+
+### **Running Migrations**
+1. Apply database migrations:
+   ```bash
+   python manage.py migrate
+   ```
+
+---
+
+### **Running the Application Locally**
+1. Start the development server:
+   ```bash
+   python manage.py runserver
+   ```
+2. Open your browser and navigate to:
+   - **Swagger Documentation**: http://127.0.0.1:8000/api/docs/
+   - **ReDoc Documentation**: http://127.0.0.1:8000/api/redoc/
+
+---
+
+### **Testing the Application**
+1. Run the test suite:
+   ```bash
+   python manage.py test
+   ```
+
+---
+
+## **API Documentation**
+The APIs are documented using **Swagger** and **ReDoc**. You can access the documentation at:
+- **Swagger**: http://127.0.0.1:8000/api/docs/
+- **ReDoc**: http://127.0.0.1:8000/api/redoc/
+
+---
+
+## **Deployment**
+The project is deployed on **Render** and can be accessed at:
+- **Live URL**: https://alx-project-nexus-89gl.onrender.com/
+
+---
+
+## **API Endpoints**
+Here’s a quick overview of the available API endpoints:
+
+### **Authentication**
+- **Register**: `POST /api/auth/register/`
+- **Login**: `POST /api/auth/login/`
+- **Logout**: `POST /api/auth/logout/`
+- **Profile**: `GET /api/auth/profile/`
+- **Reset Password**: `POST /api/auth/reset-password/`
+
+### **Products**
+- **List Products**: `GET /api/products/`
+- **Create Product**: `POST /api/products/`
+- **Retrieve Product**: `GET /api/products/{id}/`
+- **Update Product**: `PUT /api/products/{id}/`
+- **Delete Product**: `DELETE /api/products/{id}/`
+
+### **Orders**
+- **List Orders**: `GET /api/orders/`
+- **Create Order**: `POST /api/orders/`
+- **Retrieve Order**: `GET /api/orders/{id}/`
+- **Cancel Order**: `PUT /api/orders/{id}/cancel/`
+
+### **Payments**
+- **Initiate Payment**: `POST /api/payments/`
+- **Check Payment Status**: `GET /api/payments/{id}/`
+
+### **Reviews**
+- **List Reviews**: `GET /api/reviews/{product_id}/`
+- **Create Review**: `POST /api/reviews/`
+- **Update Review**: `PUT /api/reviews/{id}/`
+- **Delete Review**: `DELETE /api/reviews/{id}/`
+
+### **Wishlist**
+- **List Wishlist**: `GET /api/wishlist/`
+- **Add to Wishlist**: `POST /api/wishlist/`
+- **Remove from Wishlist**: `DELETE /api/wishlist/{id}/`
+
+---
+
+## **Contributing**
+1. Fork the repository.
+2. Create a new branch:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Add your feature"
+   ```
+4. Push to the branch:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+5. Open a pull request.
+
+---
+
+## **License**
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## **Acknowledgments**
+- **Django REST Framework**: For building powerful and flexible APIs.
+- **Render**: For hosting the application.
+- **Swagger and ReDoc**: For API documentation.
+
+---
+
+## **Contact**
+For questions or feedback, feel free to reach out:
+- **Name**: Brian Kimurgor
+- **Email**: your-email@example.com
+- **GitHub**: [your-username](https://github.com/your-username)
+
+---
+
+Enjoy using **Project Nexus**! 🚀
+
+---
+
+This README provides a complete guide for setting up, running, and deploying your project. Let me know if you need further assistance! 😊
