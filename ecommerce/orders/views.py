@@ -5,27 +5,38 @@ from .serializers import OrderSerializer, OrderCreateSerializer, OrderCancelSeri
 
 class OrderListCreateView(generics.ListCreateAPIView):
     serializer_class = OrderSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]  # Allow any user
 
     def get_queryset(self):
-        return Order.objects.filter(user=self.request.user)
+        # Return all orders for unauthenticated users or filter by user if authenticated
+        user = self.request.user
+        if user.is_authenticated:
+            return Order.objects.filter(user=user)
+        return Order.objects.filter(user__isnull=True)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        # Save with user if authenticated, otherwise None
+        user = self.request.user if self.request.user.is_authenticated else None
+        serializer.save(user=user)
 
 class OrderDetailView(generics.RetrieveAPIView):
     serializer_class = OrderSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
-        return Order.objects.filter(user=self.request.user)
+        # Allow retrieving any order
+        return Order.objects.all()
 
 class OrderCancelView(generics.UpdateAPIView):
     serializer_class = OrderCancelSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
-        return Order.objects.filter(user=self.request.user)
+        # Return orders for authenticated users or none for anonymous
+        user = self.request.user
+        if user.is_authenticated:
+            return Order.objects.filter(user=user)
+        return Order.objects.none()
 
     def update(self, request, *args, **kwargs):
         order = self.get_object()

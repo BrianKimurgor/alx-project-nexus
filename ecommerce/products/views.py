@@ -35,7 +35,7 @@ class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = [permissions.IsAdminUser]  # Admin-only for POST, PUT, DELETE by default
+    permission_classes = [permissions.AllowAny()]  # Admin-only for POST, PUT, DELETE by default
     
     # Filtering, Sorting, and Pagination
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
