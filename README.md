@@ -183,13 +183,10 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## **Contact**
 For questions or feedback, feel free to reach out:
 - **Name**: Brian Kimurgor
-- **Email**: your-email@example.com
-- **GitHub**: [your-username](https://github.com/your-username)
+- **Email**: kimurgorbrian20@gmail.com
 
 ---
 
 Enjoy using **Project Nexus**! 🚀
 
 ---
-
-This README provides a complete guide for setting up, running, and deploying your project. Let me know if you need further assistance! 😊
